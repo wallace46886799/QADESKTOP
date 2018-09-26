@@ -3,7 +3,7 @@
     <div @keyup='submit($event)'>
 
       <mu-appbar  >
-        <mu-flat-button flat class='quantaxislogo' href='/'  color='white' style='-webkit-app-region: drag'
+        <mu-flat-button flat class='quantaxislogo'  color='white' style='-webkit-app-region: drag'
           disable slot='left'>QUANTAXIS</mu-flat-button>
         <mu-raised-button slot='right' label='User' ref='button'  @click=toggle(true) />
 

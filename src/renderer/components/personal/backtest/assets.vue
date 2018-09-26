@@ -14,7 +14,7 @@
         <mu-raised-button label='策略查看' class='demo-raised-button' />
       </router-link>
       <mu-raised-button label='说明' class='demo-raised-button' @click='showToast' />
-      <mu-toast v-if='toast' message='此版本仅适用于1.1.6.dev3 ++的回测演示' @close='hideToast' />
+      <mu-toast v-if='toast' message='此版本仅适用于1.1.7.dev2 ++的回测演示' @close='hideToast' />
       <mu-divider />
     </div>
     <div>

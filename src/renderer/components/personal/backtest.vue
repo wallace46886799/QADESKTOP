@@ -1,6 +1,10 @@
 <template>
   <div id='acc'>
       <h1>> BACKTEST</h1>
+      <div>
+        <mu-raised-button @click="get_strategymember">刷新</mu-raised-button>
+      </div>
+      
       <!-- <div  class='inside_list'>
         <mu-list>
         <router-link :to="{ name:'history',params: {id:cookie}}">
@@ -16,6 +20,7 @@
         
         </mu-list>
         </div> -->
+        
         <div class='left_side'>
             <mu-table :height="height">
 

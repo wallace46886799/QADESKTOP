@@ -73,7 +73,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      height: '1000px',
+      height: '800px',
       selectable: false,
       multiSelectable: false,
       enableSelectAll: false,

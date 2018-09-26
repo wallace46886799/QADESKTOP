@@ -1,6 +1,10 @@
 <template>
   <div style='text-align:left'>
-      <h1>{{this.title}}</h1>
+
+      <div>
+      <h2 align='left'>> 策略查看</h2>
+      </div>
+      
       <div class='container'>
 
       <router-link v-bind:to="{name:'history',id:this.data0}">
@@ -16,7 +20,7 @@
       <mu-divider />
     </div>
       <div>
-
+        <h3>{{this.title}}</h3>
         <h4>Version: {{this.version}}    Topic:{{this.topic}}
             Last_modified_time:{{this.last_modified_time}}</h4>
       </div>

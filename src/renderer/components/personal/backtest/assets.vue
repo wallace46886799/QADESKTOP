@@ -229,15 +229,6 @@ export default {
           var benchmarkhistory = data['benchmark_assets']
           var assets = data['assets']
           var totaltimeindex = data['totaltimeindex']
-          var timeindex = data['timeindex']
-          for (var i = 0; i < totaltimeindex.length; i++) {
-            if (timeindex.indexOf(totaltimeindex[i]) === -1) {
-              timeindex.splice(i, 0, totaltimeindex[i])
-              assets.splice(i, 0, assets[i - 1])
-            }
-          }
-
-          console.log(assets)
           this.chart.setOption({
             series: [
               {

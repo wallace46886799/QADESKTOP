@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <h2 align='left'>> 交易历史</h2>
+    </div>
     <div class="container">
       <mu-raised-button v-on:click='query()' label="成交明细" class="demo-raised-button" primary />
       <router-link :to="{ name:'assets',params: {id:this.message}}">
@@ -83,6 +86,11 @@ export default {
           console.log(error)
         })
     }
+  },
+  mounted () {
+    this.$nextTick(function () {
+      this.query()
+    })
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div style='text-align:left'>
 
       <div>
-      <h2 align='left'>> 策略查看</h2>
+      <h2 align='left'>> 策略查看 {{this.message}}</h2>
       </div>
       
       <div class='container'>

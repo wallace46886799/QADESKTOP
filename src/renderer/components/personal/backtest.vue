@@ -2,7 +2,7 @@
   <div id='acc'>
       <h1>> BACKTEST</h1>
       <div>
-        <mu-raised-button @click="get_strategymember">刷新</mu-raised-button>
+        <mu-raised-button @click="get_strategymember">refresh</mu-raised-button>
       </div>
       
       <!-- <div  class='inside_list'>
@@ -22,7 +22,8 @@
         </div> -->
         
         <div class='left_side'>
-            <mu-table :height="height">
+            <mu-table :height="height"  :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
+                      :selectable="selectable" :showCheckbox="showCheckbox">
 
 
             <mu-thead  slot="header">
@@ -34,11 +35,11 @@
                 <mu-th>市场</mu-th>
               </mu-tr>
             </mu-thead>
-            <template v-for="item in items">
+            <template v-for="item in itemDX">
                 <mu-tbody>
                     <mu-tr>
-                        <mu-td><router-link :to="{ name:'assets',params: {id:item['account_cookie']}}">{{ item['portfolio_cookie']}}</router-link></mu-td>
-                        <mu-td><router-link :to="{ name:'assets',params: {id:item['account_cookie']}}">{{ item['account_cookie']}}</router-link></mu-td>
+                        <mu-td><router-link :to="{ name:'assets',id:item['account_cookie']}">{{ item['portfolio_cookie']}}</router-link></mu-td>
+                        <mu-td><router-link :to="{ name:'assets',id:item['account_cookie']}">{{ item['account_cookie']}}</router-link></mu-td>
                         <mu-td>{{ item['start_date']}}</mu-td>
                         <mu-td>{{ item['end_date']}}</mu-td>
                         <mu-td>{{ item['market_type']}}</mu-td>
@@ -67,8 +68,12 @@ export default {
   data () {
     return {
       height: '1000px',
+      selectable: false,
+      multiSelectable: false,
+      enableSelectAll: false,
+      showCheckbox: false,
       user: sessionStorage.user,
-      items: [{
+      itemDX: [{
         'user_cookie': 'admin',
         'portfolio_cookie': 'macd_test',
         'account_cookie': 'future fast',
@@ -83,7 +88,7 @@ export default {
     get_strategymember () {
       axios.get('http://localhost:8010/accounts/all')
         .then(response => {
-          this.items = response.data['result']
+          this.itemDX = response.data['result']
         })
         .catch(function (error) {
           console.log(error)
@@ -94,7 +99,16 @@ export default {
     this.$nextTick(function () {
       this.get_strategymember()
     })
-  }
+  }// ,
+  // watch: {
+  //   topPopup (val) {
+  //     if (val) {
+  //       setTimeout(() => {
+  //         this.topPopup = false
+  //       }, 800)
+  //     }
+  //   }
+  // }
 }
 </script>
 

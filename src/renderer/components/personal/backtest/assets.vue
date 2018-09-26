@@ -2,7 +2,7 @@
   <div class='main_content'>
 
     <div>
-      <h2 align='left'>> 业绩表现</h2>
+      <h2 align='left'>> 业绩表现 : {{this.data0}}</h2>
     </div>
     <div class='container'>
 

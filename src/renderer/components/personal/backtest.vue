@@ -23,7 +23,7 @@
         
         <div class='left_side'>
             <mu-table :height="height"  :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
-                      :selectable="selectable" :showCheckbox="showCheckbox">
+                      :selectable="selectable" :showCheckbox="showCheckbox"  @rowClick="jump">
 
 
             <mu-thead  slot="header">
@@ -35,21 +35,27 @@
                 <mu-th>市场</mu-th>
               </mu-tr>
             </mu-thead>
-            <template v-for="item in itemDX">
-                <mu-tbody>
-                    <mu-tr>
-                        <mu-td><router-link :to="{ name:'assets',id:item['account_cookie']}">{{ item['portfolio_cookie']}}</router-link></mu-td>
-                        <mu-td><router-link :to="{ name:'assets',id:item['account_cookie']}">{{ item['account_cookie']}}</router-link></mu-td>
-                        <mu-td>{{ item['start_date']}}</mu-td>
-                        <mu-td>{{ item['end_date']}}</mu-td>
-                        <mu-td>{{ item['market_type']}}</mu-td>
+            <mu-tbody>
+                <mu-tr v-for="item,indexx in itemDX" key="indexx">
+                    <mu-td>{{ item['portfolio_cookie']}}</mu-td>
+                    <mu-td>{{ item['account_cookie']}}</mu-td>
+                    <mu-td>{{ item['start_date']}}</mu-td>
+                    <mu-td>{{ item['end_date']}}</mu-td>
+                    <mu-td>{{ item['market_type']}}</mu-td>
 
-                    </mu-tr>
-                </mu-tbody>
+                </mu-tr>
+            </mu-tbody>
 
-          </template>
 
-        </mu-table>
+
+        <!-- <mu-tfoot slot="footer">
+          <mu-tr>
+            <mu-td>ID</mu-td>
+            <mu-td>Name</mu-td>
+            <mu-td>Status</mu-td>
+          </mu-tr>
+        </mu-tfoot> -->
+      </mu-table>
         </div>
 
         <div id='viewx'>
@@ -93,22 +99,25 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    jump (index, tr) {
+      // console.log(tr)
+      var cookie = tr.$children[1].$el.innerText
+      console.log(cookie)
+      this.$router.push({name: 'assets', params: {id: cookie}})
     }
   },
   mounted () {
     this.$nextTick(function () {
       this.get_strategymember()
     })
-  }// ,
-  // watch: {
-  //   topPopup (val) {
-  //     if (val) {
-  //       setTimeout(() => {
-  //         this.topPopup = false
-  //       }, 800)
-  //     }
-  //   }
-  // }
+  },
+  watch: {
+    rowClick (index, tr) {
+      console.log(index)
+      console.log(tr)
+    }
+  }
 }
 </script>
 

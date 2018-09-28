@@ -58,6 +58,14 @@ export default new Router({
         }]
       },
       {
+        'path': '/personal/trade',
+        component: require('@/components/personal/trade').default
+        // children: [{
+        //   'path': '/personal/trade/bs',
+        //   component: require('@/components/personal/quotation/kline').default
+        // }]
+      },
+      {
         'path': '/personal/block',
         component: require('@/components/personal/block').default,
         children: [{

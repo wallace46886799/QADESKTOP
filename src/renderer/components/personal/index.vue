@@ -12,6 +12,9 @@
           <router-link to='/personal/account/bind'>
               <mu-list-item title='绑定账户'></mu-list-item>
           </router-link>
+          <router-link to='/personal/trade'>
+              <mu-list-item title='交易'></mu-list-item>
+          </router-link>
 
         </mu-list>
       </div>

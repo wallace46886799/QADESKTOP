@@ -35,17 +35,18 @@
                 <mu-th>市场</mu-th>
               </mu-tr>
             </mu-thead>
-            <mu-tbody>
-                <mu-tr v-for="item,indexx in itemDX" key="indexx">
-                    <mu-td>{{ item['portfolio_cookie']}}</mu-td>
-                    <mu-td>{{ item['account_cookie']}}</mu-td>
-                    <mu-td>{{ item['start_date']}}</mu-td>
-                    <mu-td>{{ item['end_date']}}</mu-td>
-                    <mu-td>{{ item['market_type']}}</mu-td>
+            <template v-for="item in itemDX">
+              <mu-tbody>
+                  <mu-tr >
+                      <mu-td>{{ item['portfolio_cookie']}}</mu-td>
+                      <mu-td>{{ item['account_cookie']}}</mu-td>
+                      <mu-td>{{ item['start_date']}}</mu-td>
+                      <mu-td>{{ item['end_date']}}</mu-td>
+                      <mu-td>{{ item['market_type']}}</mu-td>
 
-                </mu-tr>
-            </mu-tbody>
-
+                  </mu-tr>
+              </mu-tbody>
+            </template>
 
 
         <!-- <mu-tfoot slot="footer">
@@ -92,7 +93,7 @@ export default {
   },
   methods: {
     get_strategymember () {
-      axios.get('http://localhost:8080/accounts/all')
+      axios.get('http://localhost:8010/accounts/all')
         .then(response => {
           this.itemDX = response.data['result']
         })

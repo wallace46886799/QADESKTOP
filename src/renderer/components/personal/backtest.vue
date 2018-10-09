@@ -38,24 +38,16 @@
             <template v-for="item in itemDX">
               <mu-tbody>
                   <mu-tr >
-                      <mu-td>{{ item['portfolio_cookie']}}</mu-td>
-                      <mu-td>{{ item['account_cookie']}}</mu-td>
-                      <mu-td>{{ item['start_date']}}</mu-td>
-                      <mu-td>{{ item['end_date']}}</mu-td>
-                      <mu-td>{{ item['market_type']}}</mu-td>
+                      <mu-td>{{ item[0]}}</mu-td>
+                      <mu-td>{{ item[1]}}</mu-td>
+                      <mu-td>{{ item[2]}}</mu-td>
+                      <mu-td>{{ item[3]}}</mu-td>
+                      <mu-td>{{ item[4]}}</mu-td>
 
                   </mu-tr>
               </mu-tbody>
             </template>
 
-
-        <!-- <mu-tfoot slot="footer">
-          <mu-tr>
-            <mu-td>ID</mu-td>
-            <mu-td>Name</mu-td>
-            <mu-td>Status</mu-td>
-          </mu-tr>
-        </mu-tfoot> -->
       </mu-table>
         </div>
 

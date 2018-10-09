@@ -21,7 +21,7 @@
     </div>
       <div>
         <h3>{{this.title}}</h3>
-        <h4>Version: {{this.version}}    Topic:{{this.topic}}
+        <h4>Topic:{{this.topic}}
             Last_modified_time:{{this.last_modified_time}}</h4>
       </div>
 
@@ -62,7 +62,6 @@ export default {
           var res = response.data['result'][0]
           this.title = res['name']
           this.code = res['content']
-          this.version = res['version']
           this.last_modified_time = res['last_modify_time']
         })
     }

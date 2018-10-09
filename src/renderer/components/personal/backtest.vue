@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     get_strategymember () {
-      axios.get('http://localhost:8010/accounts/all')
+      axios.get('http://localhost:8080/accounts/all')
         .then(response => {
           this.itemDX = response.data['result']
         })
@@ -104,7 +104,7 @@ export default {
       // console.log(tr)
       var cookie = tr.$children[1].$el.innerText
       console.log(cookie)
-      this.$router.push({name: 'assets', params: {id: cookie}})
+      this.$router.replace({name: 'assets', params: {id: cookie}})
     }
   },
   mounted () {
@@ -116,6 +116,11 @@ export default {
     rowClick (index, tr) {
       console.log(index)
       console.log(tr)
+    },
+    '$route' (to, from) {
+      console.log(to)
+      console.log(from)
+      this.$router.go(0)
     }
   }
 }

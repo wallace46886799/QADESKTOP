@@ -100,10 +100,10 @@ export default {
         )
     },
     select (id) {
-      this.monitorCode.push({'block': this.block_ref, 'code': this.block_code[id]['code'], 'name': this.block_code[id]['name']})
+      this.monitorCode.push({ 'block': this.block_ref, 'code': this.block_code[id]['code'], 'name': this.block_code[id]['name'] })
     },
     save () {
-      console.log({'block': JSON.stringify(this.monitorCode)})
+      console.log({ 'block': JSON.stringify(this.monitorCode) })
       axios.post('http://localhost:8010/user/blocksetting?block=' + JSON.stringify(this.monitorCode))
     },
     get () {

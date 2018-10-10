@@ -2,7 +2,7 @@
   <div style='text-align:left'>
 
       <div>
-      <h2 align='left'>> 策略查看 {{this.message}}</h2>
+      <h2 align='left'>> 策略查看</h2>
       </div>
       
       <div class='container'>
@@ -21,7 +21,7 @@
     </div>
       <div>
         <h3>{{this.title}}</h3>
-        <h4>Topic:{{this.topic}}
+        <h4>
             Last_modified_time:{{this.last_modified_time}}</h4>
       </div>
 
@@ -52,12 +52,14 @@ export default {
   data () {
     return {
       code: 'abc',
+      title: 'NONE',
+      data0: this.$route.params.id,
       last_modified_time: 'none'
     }
   },
   methods: {
     ready (id) {
-      axios.get('http://localhost:8010/strategy/content?account_cookie=' + id)
+      axios.get('http://localhost:8010/strategy/content', { params: { 'account_cookie': id } })
         .then(response => {
           var res = response.data['result'][0]
           this.title = res['name']
@@ -70,16 +72,16 @@ export default {
     this.$nextTick(function () {
       this.ready(this.$route.params.id)
     })
-  },
-  watch: {
-    topPopup (val) {
-      if (val) {
-        setTimeout(() => {
-          this.topPopup = false
-        }, 800)
-      }
-    }
   }
+  // watch: {
+  //   topPopup (val) {
+  //     if (val) {
+  //       setTimeout(() => {
+  //         this.topPopup = false
+  //       }, 800)
+  //     }
+  //   }
+  // }
 }
 </script>
 

@@ -25,11 +25,15 @@
                 <mu-list-item class='menu_list'  title='版块监控'></mu-list-item>
               </router-link>
  -->
-
+              <router-link to='/personal/backtest'>
+                  <mu-list-item title='回测概览'></mu-list-item>
+              </router-link>
               <router-link to='/personal/account'>
                 <mu-list-item class='menu_list'  title='账户管理'></mu-list-item>
               </router-link>
-
+              <router-link to='/personal/trade'>
+                  <mu-list-item title='交易'></mu-list-item>
+              </router-link>
               <mu-divider />
               <mu-list-item class='menu_list'  title='Sign out' @click='signout' />
 

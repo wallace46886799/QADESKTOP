@@ -7,7 +7,7 @@
 </template>
 <script>
 
-const ws = new WebSocket('ws://localhost:8010/realtime')
+const ws = new WebSocket('ws://localhost:8010/command/runbacktest')
 const message = []
 export default {
   data () {

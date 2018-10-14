@@ -1,49 +1,110 @@
 <template>
-	<div>
-        <el-aside style="border-right: 1px solid rgb(238, 238, 238)">
-            <el-form ref="form" id="trade" :model="form">
-                <el-form-item label="">
-                    <el-input v-model="theinstrumentId" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="手数">
-                    <el-input-number v-model="form.volume" />
-                </el-form-item>
-                <el-form-item label="价格">
-                    <el-input-number :step="priceStep" v-model="theLastPrice" />
-                </el-form-item>
-                <el-row>
-                    <el-col :span="12">
-                        <el-button plain @click="setOrder('BUY','OPEN')">买开</el-button>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-button plain @click="setOrder('SELL','OPEN')">卖开</el-button>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-button plain @click="setOrder('BUY','CLOSE')">买平</el-button>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-button plain @click="setOrder('SELL','CLOSE')">卖平</el-button>
-                    </el-col>
-                </el-row>
-            </el-form>
-        </el-aside>
-        <el-main>
-            <el-tabs type="border-card">
-                <el-tab-pane label="账户" name="first">
-                    <mTable id="table-four" height="150" :tableData="account" :tableHeader="accountHeader" @cellClick="cellClick" />
-                </el-tab-pane>
-                <el-tab-pane label="持仓" name="third">
-                    <mTable id="table-two" height="150" :tableData="positions" :tableHeader="positionHeader" @cellClick="cellClick" />
-                </el-tab-pane>
-                <el-tab-pane label="委托单" name="second">
-                    <mTable id="table-one" :tableData="orders" :tableHeader="orderHeader" @cellClick="cellClick" @cellDblclick="cellDblclick"
-                            height="150" />
-                </el-tab-pane>
-                <el-tab-pane label="成交记录" name="fourth">
-                    <mTable id="table-three" height="150" :tableData="trades" :tableHeader="tradeHeader" @cellClick="cellClick" />
-                </el-tab-pane>
-            </el-tabs>
-        </el-main>
+    <div>
+        <h1>>input</h1>
+        <input id='run' type="text">
+        <!-- <mu-input id='run'></mu-input> -->
+        <button @click='sendkey'>send</button>
 
-	</div>
+        <div>
+          <monaco-editor
+            class="editor"
+            v-model="code"
+            theme='vs-dark'
+            language="python">
+
+            {{this.code}}
+          </monaco-editor>
+        </div>
+    </div>
 </template>
+<script>
+import MonacoEditor from 'vue-monaco'
+// const ws = new WebSocket('ws://localhost:8010/command/runbacktest')
+const message = []
+export default {
+  components: {
+    MonacoEditor
+  },
+  data () {
+    return {
+      websock: null,
+      message,
+      code: ''
+    }
+  },
+  created () {
+    // 页面刚进入时开启长连接
+    this.initWebSocket()
+  },
+  destroyed () {
+    // 页面销毁时关闭长连接
+    this.websocketclose()
+  },
+  methods: {
+    initWebSocket () {
+    // 初始化weosocket
+      const wsuri = 'ws://localhost:8010/command/runbacktest'
+      this.websock = new WebSocket(wsuri)
+      console.log(this.websock)
+      this.websock.onopen = this.websocketonopen
+      this.websock.onerror = this.websocketonerror
+      this.websock.onmessage = this.websocketonmessage
+      this.websock.onclose = this.websocketclose
+    },
+    websocketonopen () {
+      console.log('WebSocket连接成功')
+    },
+    websocketonerror (e) {
+      console.log('ERROR')
+    },
+    websocketonmessage (e) {
+      this.code = this.code + '\n' + e.data
+    },
+    websocketsend (agentData) {
+      this.websock.send(agentData)
+    },
+    // get_message () {
+    //   ws.onmessage = function (event) {
+    //     this.code = this.code + event.data
+    //   }
+    // },
+    sendkey () {
+      this.websocketsend(document.getElementById('run').value)
+    },
+    websocketclose () {
+      console.log('close')
+    }
+    // stop () {
+    //   ws.send('stop')
+    // }
+  }
+}
+</script>
+<style>
+.editor {
+  width: 1000px;
+  height: 800px;
+}
+
+.monaco-editor vs {
+  text-align: left;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.margin-view-overlays{
+  width: 40px;
+  background-color: rgb(34, 34, 34);
+}
+
+.view-lines{
+  
+  background-color: rgb(52, 52, 52);
+}
+
+.current-line{
+
+  background-color: rgb(114, 114, 114);
+}
+</style>

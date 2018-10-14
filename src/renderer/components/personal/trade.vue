@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>> BACKTEST RUNNER</h1>
-        <mu-text-field  class="demo-divider-form"  v-model="command" labelFloat/>
+        <mu-text-field label="请在此输入完整的文件地址"  class="demo-divider-form"  v-model="command" labelFloat/>
         <!-- <mu-input id='run'></mu-input> -->
         <mu-raised-button label='提交' @click='sendkey' />
         <div>
@@ -29,7 +29,7 @@ export default {
       websock: null,
       message,
       code: '',
-      command: 'please input'
+      command: ''
     }
   },
   created () {

@@ -1,10 +1,9 @@
 <template>
     <div>
-        <h1>>input</h1>
-        <input id='run' type="text">
+        <h1>> BACKTEST RUNNER</h1>
+        <mu-text-field  class="demo-divider-form"  v-model="command" labelFloat/>
         <!-- <mu-input id='run'></mu-input> -->
-        <button @click='sendkey'>send</button>
-
+        <mu-raised-button label='提交' @click='sendkey' />
         <div>
           <monaco-editor
             class="editor"
@@ -29,7 +28,8 @@ export default {
     return {
       websock: null,
       message,
-      code: ''
+      code: '',
+      command: 'please input'
     }
   },
   created () {
@@ -69,7 +69,8 @@ export default {
     //   }
     // },
     sendkey () {
-      this.websocketsend(document.getElementById('run').value)
+      console.log(this.command)
+      this.websocketsend(this.command)
     },
     websocketclose () {
       console.log('close')
@@ -84,6 +85,9 @@ export default {
 .editor {
   width: 1000px;
   height: 800px;
+}
+.mu-text-field{
+  width: 1000px;
 }
 
 .monaco-editor vs {

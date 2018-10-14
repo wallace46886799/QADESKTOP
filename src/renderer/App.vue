@@ -19,7 +19,7 @@
             <mu-menu >
 
               <router-link to='/personal/index'>
-                <mu-list-item class='menu_list'  title='个人中心'></mu-list-item>
+                <mu-list-item class='menu_list'  title='行情中心'></mu-list-item>
               </router-link>
               <!-- <router-link to='/personal/block'>
                 <mu-list-item class='menu_list'  title='版块监控'></mu-list-item>
@@ -32,7 +32,7 @@
                 <mu-list-item class='menu_list'  title='账户管理'></mu-list-item>
               </router-link>
               <router-link to='/personal/trade'>
-                  <mu-list-item title='交易'></mu-list-item>
+                  <mu-list-item title='回测运行'></mu-list-item>
               </router-link>
               <mu-divider />
               <mu-list-item class='menu_list'  title='Sign out' @click='signout' />

@@ -1,5 +1,5 @@
 {
-  "name": "quantaxis",
+  "name": "qadesktop",
   "version": "0.0.6",
   "author": "yutiansut <yutiansut@qq.com>",
   "description": "quantaxis",
@@ -19,7 +19,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "quantaxis",
+    "productName": "qadesktop",
     "appId": "org.yutiansut.quantaxis",
     "directories": {
       "output": "build"

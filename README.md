@@ -2,6 +2,7 @@
 
 > quantaxis desktop
 
+(本项目需要配合 [QUANTAXIS/QUANTAXIS](https://github.com/quantaxis/quantaxis) 使用, 安装完 quantaxis后, 使用quantaxisd.exe 开启后台服务器)
 
 
 ```

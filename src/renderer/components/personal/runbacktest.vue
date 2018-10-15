@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>> QUANTAXIS TRADER</h1>
+        <h1>> BACKTEST RUNNER</h1>
         <mu-text-field label="请在此输入完整的文件地址"  class="demo-divider-form"  v-model="command" labelFloat/>
         <!-- <mu-input id='run'></mu-input> -->
         <mu-raised-button label='提交' @click='sendkey' />
@@ -43,7 +43,7 @@ export default {
   methods: {
     initWebSocket () {
     // 初始化weosocket
-      const wsuri = 'ws://localhost:8010/trade'
+      const wsuri = 'ws://localhost:8010/command/runbacktest'
       this.websock = new WebSocket(wsuri)
       console.log(this.websock)
       this.websock.onopen = this.websocketonopen
@@ -63,10 +63,14 @@ export default {
     websocketsend (agentData) {
       this.websock.send(agentData)
     },
+    // get_message () {
+    //   ws.onmessage = function (event) {
+    //     this.code = this.code + event.data
+    //   }
+    // },
     sendkey () {
       console.log(this.command)
       this.websocketsend(this.command)
-      this.code = this.code + '\n' + '> input: ' + this.command
     },
     websocketclose () {
       console.log('close')

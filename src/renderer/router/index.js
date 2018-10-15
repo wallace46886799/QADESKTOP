@@ -66,6 +66,14 @@ export default new Router({
         // }]
       },
       {
+        'path': '/personal/runbacktest',
+        component: require('@/components/personal/runbacktest').default
+        // children: [{
+        //   'path': '/personal/trade/bs',
+        //   component: require('@/components/personal/quotation/kline').default
+        // }]
+      },
+      {
         'path': '/personal/block',
         component: require('@/components/personal/block').default,
         children: [{

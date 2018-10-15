@@ -31,8 +31,11 @@
               <router-link to='/personal/account'>
                 <mu-list-item class='menu_list'  title='账户管理'></mu-list-item>
               </router-link>
-              <router-link to='/personal/trade'>
+              <router-link to='/personal/runbacktest'>
                   <mu-list-item title='回测运行'></mu-list-item>
+              </router-link>
+              <router-link to='/personal/trade'>
+                  <mu-list-item title='交易'></mu-list-item>
               </router-link>
               <mu-divider />
               <mu-list-item class='menu_list'  title='Sign out' @click='signout' />

@@ -1,24 +1,16 @@
 <template>
     <div>
         <h1>> QUANTAXIS TRADER</h1>
-        <mu-text-field label="请在此输入完整的文件地址"  class="demo-divider-form"  v-model="command" labelFloat/>
-        <!-- <mu-input id='run'></mu-input> -->
-        <mu-raised-button label='提交' @click='sendkey' />
-        <div>
-          <monaco-editor
-            class="editor"
-            v-model="code"
-            theme='vs-dark'
-            language="python">
+        <div class="left_side">
+          
+        </div>
+        <div class = 'right_side'>
 
-            {{this.code}}
-          </monaco-editor>
         </div>
     </div>
 </template>
 <script>
 import MonacoEditor from 'vue-monaco'
-// const ws = new WebSocket('ws://localhost:8010/command/runbacktest')
 const message = []
 export default {
   components: {
@@ -29,7 +21,20 @@ export default {
       websock: null,
       message,
       code: '',
-      command: ''
+      command: '',
+      account: null,
+      account_cookie: null, // ac
+      order: null, // 订单
+      price: null, // 价格
+      cur_price: null, // 当前价
+      order_amount: null, // 订单数量
+      order_towards: null, // 订单方向
+      order_status: 100, // 订单状态 100 刚创建
+      order_id: null, // 订单id
+      trade_id: null, // 交易id
+      datetime: null, // 时间
+      order_time: null, // 发单时间
+      trade_time: null // 成交时间
     }
   },
   created () {

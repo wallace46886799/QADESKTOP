@@ -2,7 +2,12 @@
     <div>
         <h1>> QUANTAXIS TRADER</h1>
         <div class="left_side">
-          
+          <mu-select-field v-model="broker_id" label="选择你的券商" @input='cs'>
+            <mu-menu-item v-for="text,index in brokers" :key="index" :value="index" :title="text" />
+          </mu-select-field>
+          <mu-text-field label="账号(account_cookie)" class="demo-divider-form" :underlineShow="true" labelFloat/>
+          <mu-text-field label="交易密码(回测不填)" class="demo-divider-form" :underlineShow="true" labelFloat/>
+          <mu-text-field label="通讯密码(回测不填)" class="demo-divider-form" :underlineShow="true" labelFloat/>
         </div>
         <div class = 'right_side'>
 
@@ -18,6 +23,9 @@ export default {
   },
   data () {
     return {
+      brokers: ['海通证券', '模拟交易', '回测', 'ctp'],
+      focus_trade_account: '',
+      broker_id: 0,
       websock: null,
       message,
       code: '',
@@ -46,6 +54,11 @@ export default {
     this.websocketclose()
   },
   methods: {
+    cs (val) {
+      // console.log(val)
+      this.broker = this.brokers[this.broker_id]
+      console.log(this.broker)
+    },
     initWebSocket () {
     // 初始化weosocket
       const wsuri = 'ws://localhost:8010/trade'
@@ -88,7 +101,7 @@ export default {
   height: 800px;
 }
 .mu-text-field{
-  width: 1000px;
+  width: 200px;
 }
 
 .monaco-editor vs {
@@ -101,6 +114,11 @@ export default {
 .margin-view-overlays{
   width: 40px;
   background-color: rgb(34, 34, 34);
+}
+
+
+.left_side {
+  width: 300px;
 }
 
 .view-lines{

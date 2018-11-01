@@ -37,17 +37,25 @@
           </div>
           <div class = 'mid_side'>
             <div id="session_account">
-              <mu-list>
-                <mu-list-item>sss</mu-list-item>
+              <mu-list  @change="select_account" >
+                 <mu-list-item v-for="text,index in session_list" :key="index" :value="index" :title="text"/>
               </mu-list>
             </div>
           </div>
           <div class = 'right_side'>
             <div id="trade_panel">
               <!-- 交易部分 -->
+                <mu-text-field label="股票/期货" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_code"/>
+                <mu-text-field label="价格" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_price"/>
+                <mu-text-field label="数量" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_amount"/>
+                <mu-raised-button label="买入" class="demo-raised-button" @click="buy"/>
+                <mu-raised-button label="卖出" class="demo-raised-button" @click="sell"/>
             </div>
             <div id="order_panel">
               <!-- 订单部分 -->
+              <div> 当前账户 {{this.account}}</div>
+              <div> 可用资金 {{this.available_cash}}</div>
+              <div> 当前持仓 {{this.hold}}</div>
             </div>
           </div>
 
@@ -63,9 +71,11 @@ export default {
   },
   data () {
     return {
+      wsuri: 'ws://localhost:8010/trade',
       loginDialog: false,
       advanceSetting: false,
       brokers: ['海通证券', '同花顺模拟交易', '通达信模拟交易', 'QUANTAXIS回测', 'ctp', 'ctp_mini'],
+      brokers_py: ['haitong', 'ths_moni', 'tdx_moni', 'quantaxis_backtest', 'ctp', 'ctp_min'],
       focus_trade_account: '',
       broker_id: 0,
       broker: '海通证券',
@@ -85,6 +95,8 @@ export default {
         risk_control: null
       },
       account: null,
+      available_cash: null,
+      hold: null,
       account_nickname: null,
       account_cookie: null, // ac
       server_ip: null, // 服务器ip
@@ -113,6 +125,19 @@ export default {
     this.websocketclose()
   },
   methods: {
+    get_available_account () {
+      var command = 'query$available_account'
+      console.log(command)
+      this.websocketsend(command)
+    },
+    get_marketdata (code) {
+      var command = 'query$market_data$' + code
+      this.websocketsend(command)
+    },
+    get_accountinfo () {
+      var command = 'query$info$' + this.account
+      this.websocketsend(command)
+    },
     openDialog () {
       this.loginDialog = true
     },
@@ -126,7 +151,7 @@ export default {
       this.advanceSetting = false
     },
     change_broker (val) {
-      this.broker = this.brokers[this.broker_id]
+      this.broker = this.brokers_py[this.broker_id]
       console.log(this.broker)
     },
     change_serverip (val) {
@@ -151,17 +176,50 @@ export default {
     change_tpassword (val) {
       this.tpassword = val
     },
+    change_code (val) {
+      this.code = val
+    },
+    change_price (val) {
+      this.price = val
+    },
+    change_amount (val) {
+      this.amount = val
+    },
+    buy () {
+      if (this.account != null) {
+        var command = 'trade$' + this.code + '$' + this.price + '$' + this.amount + '$1' + this.trade_time
+        console.log(command)
+        this.websocketsend(command)
+      } else {
+        alert('请先选择账户')
+      }
+    },
+    sell () {
+      // code/price/amount/towards/time
+      if (this.account != null) {
+        var command = 'trade$' + this.code + '$' + this.price + '$' + this.amount + '$-1' + this.trade_time
+        console.log(command)
+        this.websocketsend(command)
+      } else {
+        alert('请先选择账户')
+      }
+    },
+    select_account (val) {
+      console.log(this.session_list[val])
+      this.account = this.session_list[val]
+      this.get_accountinfo()
+    },
     send_login () {
       console.log([this.account_cookie, this.broker])
-      this.command = 'login$' + this.account_cookie + '$' + this.broker + '$' + this.password + '$' + this.tpassword
+      // login$account$broker$password$tpassword$serverip
+      this.command = 'login$' + this.account_cookie + '$' + this.broker + '$' + this.password + '$' + this.tpassword + '$' + this.server_ip
       console.log(this.command)
       this.websocketsend(this.command)
-      this.code = this.code + '\n' + '> input: ' + this.command
+      // this.code = this.code + '\n' + '> input: ' + this.command
     },
     initWebSocket () {
     // 初始化weosocket
-      const wsuri = 'ws://localhost:8010/trade'
-      this.websock = new WebSocket(wsuri)
+      this.websock = new WebSocket(this.wsuri)
       console.log(this.websock)
       this.websock.onopen = this.websocketonopen
       this.websock.onerror = this.websocketonerror
@@ -175,7 +233,23 @@ export default {
       console.log('ERROR')
     },
     websocketonmessage (e) {
-      this.code = this.code + '\n' + e.data
+      // 前后端协议交互部分
+      var res = JSON.parse(e.data)
+      if (res['topic'] === 'login') {
+        if (res['status'] === 200) {
+          console.log('success login')
+          this.get_available_account()
+        }
+      } else if (res['topic'] === 'query_account') {
+        if (res['status'] === 200) {
+          this.session_list = res['data']
+        }
+      } else if (res['topic'] === 'open') {
+        this.get_available_account()
+      } else if (res['topic'] === 'account_info') {
+        this.available_cash = res['data']['cash']
+        this.hold = res['data']['hold']
+      }
     },
     websocketsend (agentData) {
       this.websock.send(agentData)
@@ -192,6 +266,11 @@ export default {
     // stop () {
     //   ws.send('stop')
     // }
+  },
+  mounted () {
+    this.$nextTick(function () {
+      // this.get_available_account()
+    })
   }
 }
 </script>
@@ -222,7 +301,7 @@ export default {
 
 #left_side {
   width: 200px;
-  height: 500px;
+  height: 100px;
   /* border-left: 1px dashed rgb(34, 34, 34);
   border-right: 1px dashed rgb(34, 34, 34); */
   display: block;

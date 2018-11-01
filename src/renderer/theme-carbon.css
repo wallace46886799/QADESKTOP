@@ -156,20 +156,22 @@ a {
   color: #ff5252;
 }
 .mu-dialog {
-  background-color: #ffffff;
+  background-color: rgb(25,25,25);
 }
 .mu-dialog-footer.scrollable,
 .mu-dialog-header.scrollable {
   border-bottom-color: #edeff2;
 }
 .mu-dialog-title {
+  background-color: rgb(25,25,25);
   color: rgb(255, 255, 255);
 }
 .mu-dialog-body {
+  background-color: rgb(25,25,25);
   color: rgba(71, 74, 79, 0.6);
 }
 .mu-dropDown-menu-text {
-  color: rgb(25,25,25);
+  color: white;
 }
 .mu-dropDown-menu-icon {
   color: #edeff2;
@@ -436,7 +438,7 @@ a {
   background-color: #e0e0e0;
 }
 .mu-switch-label {
-  color: rgb(25,25,25);
+  color: #e0e0e0;
 }
 .mu-switch.disabled .mu-switch-label {
   color: #d3d6db;

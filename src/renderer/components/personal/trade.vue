@@ -56,6 +56,10 @@
               <div> 当前账户 {{this.account}}</div>
               <div> 可用资金 {{this.available_cash}}</div>
               <div> 当前持仓 {{this.hold}}</div>
+              <div> 交易历史</div>
+              <mu-list>
+                <mu-list-item v-for="text,index in history" :key="index" :value="index" :title="text"/>
+              </mu-list>
             </div>
           </div>
 
@@ -111,8 +115,9 @@ export default {
       order_id: null, // 订单id
       trade_id: null, // 交易id
       datetime: null, // 时间
+      history: [], // 交易历史
       order_time: null, // 发单时间
-      trade_time: null // 成交时间
+      trade_time: '2018-10-18' // 成交时间
     }
   },
   created () {
@@ -136,6 +141,11 @@ export default {
     },
     get_accountinfo () {
       var command = 'query$info$' + this.account
+      this.websocketsend(command)
+      this.get_historytrade()
+    },
+    get_historytrade () {
+      var command = 'query$history$' + this.account
       this.websocketsend(command)
     },
     openDialog () {
@@ -187,7 +197,7 @@ export default {
     },
     buy () {
       if (this.account != null) {
-        var command = 'trade$' + this.code + '$' + this.price + '$' + this.amount + '$1' + this.trade_time
+        var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.trade_time
         console.log(command)
         this.websocketsend(command)
       } else {
@@ -197,7 +207,7 @@ export default {
     sell () {
       // code/price/amount/towards/time
       if (this.account != null) {
-        var command = 'trade$' + this.code + '$' + this.price + '$' + this.amount + '$-1' + this.trade_time
+        var command = 'trade$' + this.account + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.trade_time
         console.log(command)
         this.websocketsend(command)
       } else {
@@ -249,6 +259,10 @@ export default {
       } else if (res['topic'] === 'account_info') {
         this.available_cash = res['data']['cash']
         this.hold = res['data']['hold']
+      } else if (res['topic'] === 'trade') {
+        this.get_accountinfo()
+      } else if (res['topic'] === 'history') {
+        this.history = res['data']
       }
     },
     websocketsend (agentData) {

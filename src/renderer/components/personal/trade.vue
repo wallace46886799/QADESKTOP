@@ -523,7 +523,7 @@ export default {
 }
 #right_up{
   width: 1100px;
-  height: 400px;
+  height: 450px;
 }
 .mu-text-field-input{
   color:white;

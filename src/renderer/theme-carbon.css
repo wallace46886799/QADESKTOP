@@ -468,13 +468,13 @@ a {
 }
 .mu-tr {
   border-bottom-color: #edeff2;
-  color: rgb(25,25,25);
+  color: #f5f5f5;
 }
 .mu-tr.selected {
-  background-color: #f5f5f5;
+  background-color: rgb(25,25,25);
 }
 .mu-tr.hover {
-  background-color: #eeeeee;
+  background-color: rgb(25,25,25);
 }
 .mu-tr.stripe {
   background-color: rgba(200, 202, 205, 0.4);

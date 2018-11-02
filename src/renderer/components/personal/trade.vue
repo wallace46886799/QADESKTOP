@@ -6,6 +6,7 @@
             <div id='login_form'>
               <!-- 账户登录/操作部分 -->
               <mu-raised-button label="添加账户" @click="openDialog"/>
+              
               <mu-dialog :open="loginDialog" title="添加交易账户" @close="closeDialog">
 
               <mu-select-field v-model="broker_id" label="选择你的券商" @input='change_broker'>
@@ -51,10 +52,12 @@
             <div id="right_up">
               <div id="trade_panel">
                 <!-- 交易部分 -->
+                  <mu-date-picker autoOk hintText="系统时间" @change="change_ordertime"/>
                   <mu-auto-complete label='代码' :maxSearchResults='10'  labelFloat :dataSource="codes" filter="caseInsensitiveFilter"  @change='get_stock_day'/>
                   <!-- <mu-text-field label="股票/期货" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_code"/> -->
                   <mu-text-field label="价格" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_price"/>
                   <mu-text-field label="数量" class="demo-divider-form" :underlineShow="true" labelFloat @input="change_amount"/>
+                  <br/>
                   <br><br>
                   <div> 买入     
                   <mu-switch labelLeft v-model="order_towards" class="demo-switch" />
@@ -180,6 +183,9 @@ export default {
     handleTabChange (val) {
       this.activeTab = val
     },
+    change_ordertime (val) {
+      this.order_time = val
+    },
     get_available_account () {
       var command = 'query$available_account'
       console.log(command)
@@ -246,11 +252,11 @@ export default {
       // true ==> 卖  false ==> 买
       if (this.account != null) {
         if (this.order_towards) {
-          var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.trade_time
+          var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.order_time
           console.log(command)
           this.websocketsend(command)
         } else {
-          command = 'trade$' + this.account + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.trade_time
+          command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.order_time
           console.log(command)
           this.websocketsend(command)
         }
@@ -528,6 +534,14 @@ export default {
 }
 .mu-text-field-input{
   color:white;
+  width: 80%;
+}
+.mu-date-picker{
+  float: bottom;
+  width:70%;
+}
+.mu-calendar {
+  color: white;
 }
 .mu-text-field{
   width: 250px;

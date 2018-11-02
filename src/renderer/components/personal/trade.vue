@@ -243,13 +243,14 @@ export default {
       this.amount = val
     },
     buy () {
+      // true ==> 卖  false ==> 买
       if (this.account != null) {
         if (this.order_towards) {
-          var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.trade_time
+          var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.trade_time
           console.log(command)
           this.websocketsend(command)
         } else {
-          command = 'trade$' + this.account + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.trade_time
+          command = 'trade$' + this.account + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.trade_time
           console.log(command)
           this.websocketsend(command)
         }

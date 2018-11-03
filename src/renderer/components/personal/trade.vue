@@ -43,7 +43,7 @@
               </mu-list>
               <mu-divider />
 
-              <mu-list :title="ss" @change="select_account" >
+              <mu-list @change="select_account" >
                  <mu-list-item v-for="text,index in session_list" :key="index" :value="index" :title="text"/>
               </mu-list>
             </div>
@@ -73,9 +73,10 @@
 
             <div id='signal_panel'>
               <mu-tabs :value="activeTab" @change="handleTabChange">
-                <mu-tab value="tab1" @active="getaccountdata" title="成交记录"/>
-                <mu-tab value="tab2" @active="getplotdata" title="待成交列表"/>
-                <mu-tab value="tab3" @active="getstrategydata" title="当前持仓"/>
+                <mu-tab value="tab1" @active="get_historytrade" title="成交记录"/>
+                <mu-tab value="tab2" @active="get_available_account" title="待成交列表"/>
+                <mu-tab value="tab3" @active="get_accountinfo" title="当前持仓"/>
+                <mu-tab value="tab4" @active="get_log" title="日志输出"/>
               </mu-tabs>
               <div id='order_panel' v-if="activeTab === 'tab1'">
                 <!-- 订单部分 -->
@@ -103,7 +104,33 @@
               </div>
 
               <div id="open_order" v-if="activeTab === 'tab2'"></div>
-              <div id="hold_panel" v-if="activeTab === 'tab3'"></div>
+              <div id="hold_panel" v-if="activeTab === 'tab3'">
+                <mu-table :fixedHeader=true :showCheckbox=false>
+                  <mu-thead>
+                    <mu-tr>
+                      <mu-td>当前账户 {{this.account}}</mu-td>
+                      <mu-td>可用资金 {{this.available_cash}}</mu-td>
+                    </mu-tr>
+                  </mu-thead>
+
+                  <mu-tbody>
+                    <mu-tr>
+                      <mu-td>{{this.hold}}</mu-td>
+                    </mu-tr>
+                  </mu-tbody>
+
+                </mu-table>
+              </div>
+              <div id="hold_panel" v-if="activeTab === 'tab4'">
+                <monaco-editor
+                class="editor"
+                v-model="log"
+                theme='vs-dark'
+                language="python">
+
+                {{this.log}}
+                </monaco-editor>
+              </div>
             </div>
           </div>
 
@@ -124,6 +151,7 @@ export default {
     return {
       hq_data: [],
       codes,
+      log: '==QUANTAXIS_TRADE== LOGS',
       wsuri: 'ws://localhost:8010/trade',
       loginDialog: false,
       advanceSetting: false,
@@ -203,6 +231,9 @@ export default {
     get_historytrade () {
       var command = 'query$history$' + this.account
       this.websocketsend(command)
+    },
+    get_log () {
+      console.log(this.log)
     },
     openDialog () {
       this.loginDialog = true
@@ -299,6 +330,7 @@ export default {
         if (res['status'] === 200) {
           console.log('success login')
           this.get_available_account()
+          this.log = this.log + '\r\n' + res['mes']
         }
       } else if (res['topic'] === 'query_account') {
         if (res['status'] === 200) {
@@ -309,8 +341,10 @@ export default {
       } else if (res['topic'] === 'account_info') {
         this.available_cash = res['data']['cash']
         this.hold = res['data']['hold']
+        this.log = this.log + '\r\n' + res['mes']
       } else if (res['topic'] === 'trade') {
         this.get_accountinfo()
+        this.log = this.log + '\r\n' + res['mes']
       } else if (res['topic'] === 'history') {
         this.history = res['data']
       }

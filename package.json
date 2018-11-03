@@ -64,7 +64,8 @@
     "vue-devtools": "^3.1.9",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "xterm": "^3.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

@@ -157,6 +157,7 @@ a {
 }
 .mu-dialog {
   background-color: rgb(25,25,25);
+  width: 350px;
 }
 .mu-dialog-footer.scrollable,
 .mu-dialog-header.scrollable {

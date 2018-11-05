@@ -188,7 +188,7 @@ export default {
       price: null, // 价格
       cur_price: null, // 当前价
       order_amount: null, // 订单数量
-      order_towards: true, // 订单方向
+      order_towards: false, // 订单方向
       order_status: 100, // 订单状态 100 刚创建
       order_id: null, // 订单id
       trade_id: null, // 交易id
@@ -326,11 +326,12 @@ export default {
     websocketonmessage (e) {
       // 前后端协议交互部分
       var res = JSON.parse(e.data)
+      this.log = this.log + '\r\n' + res['mes']
       if (res['topic'] === 'login') {
         if (res['status'] === 200) {
           console.log('success login')
           this.get_available_account()
-          this.log = this.log + '\r\n' + res['mes']
+          // this.log = this.log + '\r\n' + res['mes']
         }
       } else if (res['topic'] === 'query_account') {
         if (res['status'] === 200) {
@@ -341,10 +342,10 @@ export default {
       } else if (res['topic'] === 'account_info') {
         this.available_cash = res['data']['cash']
         this.hold = res['data']['hold']
-        this.log = this.log + '\r\n' + res['mes']
+        // this.log = this.log + '\r\n' + res['mes']
       } else if (res['topic'] === 'trade') {
         this.get_accountinfo()
-        this.log = this.log + '\r\n' + res['mes']
+        // this.log = this.log + '\r\n' + res['mes']
       } else if (res['topic'] === 'history') {
         this.history = res['data']
       }

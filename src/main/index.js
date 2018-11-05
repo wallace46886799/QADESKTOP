@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
+  ? `http://www.yutiansut.com:9080`
   : `file://${__dirname}/index.html`
 
 function createWindow () {

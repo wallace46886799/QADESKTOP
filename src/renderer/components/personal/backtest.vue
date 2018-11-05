@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     get_strategymember () {
-      axios.get('http://localhost:8010/accounts/all')
+      axios.get('http://www.yutiansut.com:8010/accounts/all')
         .then(response => {
           this.itemDX = response.data['result']
         })
@@ -358,7 +358,7 @@ export default {
       if (this.toastTimer) clearTimeout(this.toastTimer)
     },
     getaccountdata () {
-      axios.get('http://localhost:8010/accounts?account_cookie=' + this.account_cookie)
+      axios.get('http://www.yutiansut.com:8010/accounts?account_cookie=' + this.account_cookie)
         .then(response => {
           this.acc = response.data['result'][0]
           this.items = this.acc['history']
@@ -368,7 +368,7 @@ export default {
         })
     },
     getstrategydata () {
-      axios.get('http://localhost:8010/strategy/content', { params: { 'account_cookie': this.account_cookie } })
+      axios.get('http://www.yutiansut.com:8010/strategy/content', { params: { 'account_cookie': this.account_cookie } })
         .then(response => {
           var res = response.data['result'][0]
           this.title = res['name']
@@ -379,7 +379,7 @@ export default {
     getplotdata () {
       this.drawline('mainxx')
       axios
-        .get('http://localhost:8010/risk?account_cookie=' + this.account_cookie)
+        .get('http://www.yutiansut.com:8010/risk?account_cookie=' + this.account_cookie)
         .then(response => {
           var data = response.data['result'][0]
           this.itemss[0]['alpha'] = data['alpha'].toFixed(3)

@@ -95,7 +95,7 @@ export default {
     },
     get_stock_day (code) {
       console.log(code)
-      axios.get('http://localhost:8010/marketdata/stock/day?code=' + code)
+      axios.get('http://www.yutiansut.com:8010/marketdata/stock/day?code=' + code)
         .then(response => {
           // console.log(response.data['result'])
           this.hq_data = response.data['result']

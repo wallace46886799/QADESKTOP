@@ -92,7 +92,7 @@ export default {
     },
     get_block (message) {
       this.block_ref = message.srcElement.innerText
-      axios.get('http://localhost:8010/stock/block?block=' + this.block_ref)
+      axios.get('http://www.yutiansut.com:8010/stock/block?block=' + this.block_ref)
         .then(response => {
           // console.log(response.data['result'])
           this.block_code = response.data['result']
@@ -104,10 +104,10 @@ export default {
     },
     save () {
       console.log({ 'block': JSON.stringify(this.monitorCode) })
-      axios.post('http://localhost:8010/user/blocksetting?block=' + JSON.stringify(this.monitorCode))
+      axios.post('http://www.yutiansut.com:8010/user/blocksetting?block=' + JSON.stringify(this.monitorCode))
     },
     get () {
-      axios.get('http://localhost:8010/user/blocksetting')
+      axios.get('http://www.yutiansut.com:8010/user/blocksetting')
         .then(response => {
           let tempData = response.data['block']
           console.log(tempData)

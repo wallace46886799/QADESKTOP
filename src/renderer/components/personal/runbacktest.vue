@@ -18,7 +18,7 @@
 </template>
 <script>
 import MonacoEditor from 'vue-monaco'
-// const ws = new WebSocket('ws://localhost:8010/command/runbacktest')
+// const ws = new WebSocket('ws://www.yutiansut.com:8010/command/runbacktest')
 const message = []
 export default {
   components: {
@@ -43,7 +43,7 @@ export default {
   methods: {
     initWebSocket () {
     // 初始化weosocket
-      const wsuri = 'ws://localhost:8010/command/runbacktest'
+      const wsuri = 'ws://www.yutiansut.com:8010/command/runbacktest'
       this.websock = new WebSocket(wsuri)
       console.log(this.websock)
       this.websock.onopen = this.websocketonopen

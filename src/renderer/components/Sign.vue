@@ -84,7 +84,7 @@ export default {
       var name = document.getElementsByClassName('mu-text-field-input')[0].value
       var password = document.getElementsByClassName('mu-text-field-input')[1].value
       let val = 'user=' + name + '&password=' + password
-      axios.get('http://localhost:8010/user/signup?' + val)
+      axios.get('http://www.yutiansut.com:8010/user/signup?' + val)
         .then(response => {
           console.log(response.data)
           if (response.data === 'SUCCESS') {
@@ -102,7 +102,7 @@ export default {
       var name = document.getElementsByClassName('mu-text-field-input')[0].value
       var password = document.getElementsByClassName('mu-text-field-input')[1].value
       let val = 'user=' + name + '&password=' + password
-      axios.get('http://localhost:8010/user/signin?' + val)
+      axios.get('http://www.yutiansut.com:8010/user/signin?' + val)
         .then(response => {
           console.log(response.data)
           if (response.data === 'SUCCESS') {

@@ -195,7 +195,7 @@ export default {
       datetime: null, // 时间
       history: [], // 交易历史
       order_time: null, // 发单时间
-      trade_time: '2018-10-18' // 成交时间
+      trade_time: '2018-10-18' // 成交时间,
     }
   },
   created () {
@@ -215,22 +215,33 @@ export default {
       this.order_time = val
     },
     get_available_account () {
-      var command = 'query$available_account'
-      console.log(command)
-      this.websocketsend(command)
+      this.command = JSON.stringify({
+        'topic': 'query',
+        'subtopic': 'available_account'
+      })
+      console.log(this.command)
+      this.websocketsend(this.command)
     },
     get_marketdata (code) {
-      var command = 'query$market_data$' + code
-      this.websocketsend(command)
+      this.command = 'query$market_data$' + code
+      this.websocketsend(this.command)
     },
     get_accountinfo () {
-      var command = 'query$info$' + this.account
-      this.websocketsend(command)
+      this.command = JSON.stringify({
+        'topic': 'query',
+        'subtopic': 'info',
+        'account_cookie': this.account
+      })
+      this.websocketsend(this.command)
       this.get_historytrade()
     },
     get_historytrade () {
-      var command = 'query$history$' + this.account
-      this.websocketsend(command)
+      this.command = JSON.stringify({
+        'topic': 'query',
+        'subtopic': 'history',
+        'account_cookie': this.account
+      })
+      this.websocketsend(this.command)
     },
     get_log () {
       console.log(this.log)
@@ -283,13 +294,29 @@ export default {
       // true ==> 卖  false ==> 买
       if (this.account != null) {
         if (this.order_towards) {
-          var command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$-1$' + this.order_time
-          console.log(command)
-          this.websocketsend(command)
+          this.command = JSON.stringify({
+            'topic': 'trade',
+            'account': this.account,
+            'code': this.code,
+            'price': this.price,
+            'amount': this.amount,
+            'towards': -1,
+            'time': this.order_time
+          })
+          console.log(this.command)
+          this.websocketsend(this.command)
         } else {
-          command = 'trade$' + this.account + '$' + this.code + '$' + this.price + '$' + this.amount + '$1$' + this.order_time
-          console.log(command)
-          this.websocketsend(command)
+          this.command = JSON.stringify({
+            'topic': 'trade',
+            'account': this.account,
+            'code': this.code,
+            'price': this.price,
+            'amount': this.amount,
+            'towards': 1,
+            'time': this.order_time
+          })
+          console.log(this.command)
+          this.websocketsend(this.command)
         }
       } else {
         alert('请先选择账户')
@@ -303,7 +330,15 @@ export default {
     send_login () {
       console.log([this.account_cookie, this.broker])
       // login$account$broker$password$tpassword$serverip
-      this.command = 'login$' + this.account_cookie + '$' + this.broker + '$' + this.password + '$' + this.tpassword + '$' + this.server_ip
+      this.command = JSON.stringify({
+        'topic': 'login',
+        'account_cookie': this.account_cookie,
+        'broker': this.broker,
+        'password': this.password,
+        'tpassword': this.tpassword,
+        'server_ip': this.server_ip
+      })
+      // this.command = 'login$' + this.account_cookie + '$' + this.broker + '$' + this.password + '$' + this.tpassword + '$' + this.server_ip
       console.log(this.command)
       this.websocketsend(this.command)
       // this.code = this.code + '\n' + '> input: ' + this.command

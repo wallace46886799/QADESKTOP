@@ -1,5 +1,5 @@
 <template>
-  <div id='personal'>
+  <div id="personal">
     <!-- <div class='welcome'>
       <mu-list>
         <router-link to='/personal/index'>
@@ -18,42 +18,39 @@
           <mu-list-item title='设置'></mu-list-item>
         </router-link>
       </mu-list>
-    </div> -->
-    <div id='view'>
+    </div>-->
+    <div id="view">
       <router-view></router-view>
     </div>
   </div>
 </template>
 <script>
-
 </script>
 <style lang='css'>
-  #personal {
-    position: relative;
-    width: 2800px;
-    height: 1000px;
-    display: block;
-  }
+#personal {
+  position: relative;
+  width: 2800px;
+  height: 1000px;
+  display: block;
+}
 
-  .welcome {
-    margin-top: 20px;
-    margin-right: 30px;
-    width: 180px;
-    height: 1000px;
-    float: left;
-    display: inline-block;
-  }
+.welcome {
+  margin-top: 20px;
+  margin-right: 30px;
+  width: 180px;
+  height: 1000px;
+  display: inline-block;
+}
 
-  .mu-item-content {
-    font-size: 18px;
-    text-align: middle;
-  }
+.mu-item-content {
+  font-size: 18px;
+  text-align: middle;
+}
 
-  #view {
-    position: relative;
-    width: 1800px;
-    height: 1000px;
-    display: block;
-  }
-
+#view {
+  position: relative;
+  width: 1800px;
+  height: 1000px;
+  display: block;
+}
 </style>

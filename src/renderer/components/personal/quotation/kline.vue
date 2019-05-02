@@ -1,7 +1,7 @@
 <template>
+  <div>
     <div>
-        <div>
-            <h1>ss</h1>
-        </div>
+      <h1>ss</h1>
     </div>
+  </div>
 </template>

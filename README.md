@@ -14,7 +14,7 @@ pip install quantaxis_webserver
 pip install git+https://github.com/yutiansut/tornado_http2
 ```
 
-使用 ```quantaxis_webserver --port==8010``` 启用后台服务器
+使用 ```quantaxis_webserver --port=8010``` 启用后台服务器
 
 
 
